@@ -123,59 +123,59 @@
 
 ## 项目结构
 
-POWERHTML/ # 项目根目录
-│
-├── bin/ # 编译输出目录
-│ ├── data/ # ⚠️ 错误放置的草稿文件夹（应位于根目录）
-│ └── powerhtml_v0.1.2.exe # 可执行文件（无需 Python 环境）
-│
-├── build/ # PyInstaller 临时编译文件（可忽略）
-│
-├── data/ # ✅ 用户草稿存储目录（正确位置）
-│ └── 你的草稿名称/ # 每个草稿独立文件夹
-│ ├── 草稿名.html # 原始 HTML 文件
-│ ├── temp_草稿名.html # 临时 HTML 文件（编辑中）
-│ ├── shapes.json # 原始图形数据
-│ ├── temp_shapes.json # 临时图形数据（编辑中）
-│ └── img/ # 图片文件夹（预留）
-│
-├── output/ # 输出目录（预留）
-│
-├── readmepics/ # README 文档配图目录
-│
-├── source_code/ # 源代码目录
-│ │
-│ ├── powerhtml.py # 主程序入口（相当于 main.py）
-│ │
-│ ├── core/ # 核心逻辑模块
-│ │ ├── init.py # 模块初始化
-│ │ ├── project.py # 项目管理（新建/打开/保存草稿）
-│ │ └── renderer.py # 画布渲染器（绘制图形）
-│ │
-│ ├── shapes/ # 图形类模块
-│ │ ├── init.py # 模块初始化，导出所有图形类
-│ │ ├── shape.py # 图形基类（Shape）
-│ │ ├── rect.py # 矩形类（Rect）
-│ │ ├── circle.py # 圆形类（Circle）
-│ │ ├── triangle.py # 三角形类（Triangle）
-│ │ └── textbox.py # 文本框类（TextBox）
-│ │
-│ ├── ui/ # 用户界面模块
-│ │ ├── init.py # 模块初始化，导出 UI 类
-│ │ ├── main_menu.py # 主菜单窗口
-│ │ ├── editor.py # 编辑器窗口（核心交互）
-│ │ └── dialogs.py # 通用对话框（新建/打开/导出确认）
-│ │
-│ └── utils/ # 工具函数模块
-│ ├── init.py # 模块初始化
-│ └── helpers.py # 辅助函数（颜色转换、坐标计算等）
-│
-├── tools/ # 外部工具目录（预留）
-│
-├── .gitignore # Git 忽略文件配置
-├── developerl.txt # 开发日志
-├── powerhtml_v0.1.2.spec # PyInstaller 配置文件
-└── README.md # 项目说明文档
+  POWERHTML/ # 项目根目录
+  │
+  ├── bin/ # 编译输出目录
+  │ ├── data/ # ⚠️ 错误放置的草稿文件夹（应位于根目录）
+  │ └── powerhtml_v0.1.2.exe # 可执行文件（无需 Python 环境）
+  │
+  ├── build/ # PyInstaller 临时编译文件（可忽略）
+  │
+  ├── data/ # ✅ 用户草稿存储目录（正确位置）
+  │ └── 你的草稿名称/ # 每个草稿独立文件夹
+  │ ├── 草稿名.html # 原始 HTML 文件
+  │ ├── temp_草稿名.html # 临时 HTML 文件（编辑中）
+  │ ├── shapes.json # 原始图形数据
+  │ ├── temp_shapes.json # 临时图形数据（编辑中）
+  │ └── img/ # 图片文件夹（预留）
+  │
+  ├── output/ # 输出目录（预留）
+  │
+  ├── readmepics/ # README 文档配图目录
+  │
+  ├── source_code/ # 源代码目录
+  │ │
+  │ ├── powerhtml.py # 主程序入口（相当于 main.py）
+  │ │
+  │ ├── core/ # 核心逻辑模块
+  │ │ ├── init.py # 模块初始化
+  │ │ ├── project.py # 项目管理（新建/打开/保存草稿）
+  │ │ └── renderer.py # 画布渲染器（绘制图形）
+  │ │
+  │ ├── shapes/ # 图形类模块
+  │ │ ├── init.py # 模块初始化，导出所有图形类
+  │ │ ├── shape.py # 图形基类（Shape）
+  │ │ ├── rect.py # 矩形类（Rect）
+  │ │ ├── circle.py # 圆形类（Circle）
+  │ │ ├── triangle.py # 三角形类（Triangle）
+  │ │ └── textbox.py # 文本框类（TextBox）
+  │ │
+  │ ├── ui/ # 用户界面模块
+  │ │ ├── init.py # 模块初始化，导出 UI 类
+  │ │ ├── main_menu.py # 主菜单窗口
+  │ │ ├── editor.py # 编辑器窗口（核心交互）
+  │ │ └── dialogs.py # 通用对话框（新建/打开/导出确认）
+  │ │
+  │ └── utils/ # 工具函数模块
+  │ ├── init.py # 模块初始化
+  │ └── helpers.py # 辅助函数（颜色转换、坐标计算等）
+  │
+  ├── tools/ # 外部工具目录（预留）
+  │
+  ├── .gitignore # Git 忽略文件配置
+  ├── developerl.txt # 开发日志
+  ├── powerhtml_v0.1.2.spec # PyInstaller 配置文件
+  └── README.md # 项目说明文档
 
 ### 核心文件说明
 
