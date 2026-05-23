@@ -1,0 +1,141 @@
+项目名称：powerhtml1.0
+目标用户是只会使用powerpoint，不会写html的人群
+目前这个powerhtml1.0版本的项目结构大致是：
+-powerhtml
+--bin
+---powerhtml.exe(经过编译生成)
+--data
+---（默认为空，如果用户创建了一个草稿，将草稿以文件夹形式保存在这）
+---example(比如这是一个草稿)
+----img（用于储存用户调用addshape时的图片）
+----example.html（用于储存html代码）
+--source_code
+---powerhtml.py
+---tools
+----arial.ttf
+--output
+---(这里是用户输出的默认位置，默认为空，如果用户)
+--readme.md
+希望打开这个软件时弹出一个“主菜单”窗口，窗口上有3个按钮
+新建草稿 打开我的草稿 退出
+如果点击“新建草稿”则弹出一个窗口“新建草稿”，在这个窗口输入文件名（默认尾缀为txt），右下角有确定 取消按钮，如果点击取消，关闭这个”新建草稿“窗口，回到“client”窗口；如果点击确定，则按照输入的文件名在data中创建文件夹和文件（例如输入example或example.html）
+data文件夹变化：
+创建前
+-data
+创建后：
+-data
+--example
+---img
+---example.html
+example.html的默认内容是一个html的框架，大致如下：
+<!DOCTYPE html>
+<html>
+</html>
+并创建一个副本temp_example.html（以下简称temp）
+随后打开一个默认大小为1024*768的窗口”显示窗口“，窗口上方的1024*128用作工具栏(天蓝色)工具栏左边是各种功能，右边是“导出”和“退出”按钮，下方的1024*640用来显示画面（通过example.html渲染）
+当点击导出按钮时，弹出一个窗口，该窗口会显示temp的内容，并问：“你是否要保存以下代码？是 否”如果点击是，用temp覆盖example.html并退出至主菜单；如果点击否，退回到“显示窗口”
+点击“退出”时，弹出一个窗口：“你要保存文件再退出吗？是 否”如果点击是，如果点击否，删除temp（如果直接叉掉窗口，默认直接退出不保存）
+接下来需要逐步往里添加功能（或者说函数，function），每个功能在工具栏上有相应的图标，通过鼠标双击调用，鼠标双击后，改变光标样式并由用户进行操作，操作完成后或点击鼠标右键取消后调用完成，光标样式恢复，修改该html文件并重新渲染界面。
+
+第一个功能：添加文本框
+首先要有class textbox
+默认
+所有文本框默认为透明的矩形，默认文本"click twice to input"
+这里可能涉及到字号/字体的问题，那么我们可能需要找到arial.ttf等文件作为字体文件
+鼠标双击后用户可以进行两种操作：
+1.鼠标单击并拖动，通过按下鼠标的位置和松开鼠标的位置来确定文本框的位置和大小
+2.鼠标单击但未拖动来确定一个位置，再次单击确定另一个位置
+两种操作均可确定两个位置
+如果第一个位置在第二个位置左上方，则第一个位置为左上角，第二个位置为右下角，反之第一个位置为右下角，第二个位置为左上角
+如果第一个位置在第二个位置右上方，则第一个位置为右上角，第二个位置为左下角，反之第一个位置为左下角，第二个位置为右上角
+调用完成之后修改html文件，修改后的html应该和如下代码类似：
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>透明文本框</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            position: relative;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" 
+           style="background: transparent; 
+                  border: 1px solid #000;
+                  position: absolute;
+                  top: 50%;
+                  left: 50%;
+                  transform: translate(-50%, -50%);
+                  font-family: '黑体', 'Microsoft YaHei';
+                  font-size: 18px;
+                  font-weight: bold;
+                  padding: 10px 15px;
+                  width: 200px;"
+           placeholder="请输入内容">
+</body>
+</html>
+第二个功能：添加图形addshape
+首先要有class shape
+init中包含self.color[3] self.text self.borderwidth self.bordercolor[3]（3个颜色按红绿蓝处理）
+还应该包含函数：
+resize重新确定图形形状和大小
+recolor重新确定颜色
+move重新确定图形位置
+clear删除该图形
+powerhtml1.0版本支持圆形 矩形 三角形，它们都继承于shape
+圆形还应该包括变量：self.center self.radius
+调用时两种操作：
+1.鼠标单击并拖动，通过按下鼠标的位置和松开鼠标的位置来确定圆心和半径
+2.鼠标单击但未拖动来确定一个位置，再次单击确定另一个位置，第一个位置为圆心，第二个位置到第一个位置的距离为半径
+矩形还应该包括变量：self.x1 self.y1 self.x2 self.y2
+调用时两种操作：
+1.鼠标单击并拖动，通过按下鼠标的位置和松开鼠标的位置来确定矩形的位置和大小
+2.鼠标单击但未拖动来确定一个位置，再次单击确定另一个位置
+两种操作均可确定两个位置
+如果第一个位置在第二个位置左上方，则第一个位置为左上角，第二个位置为右下角，反之第一个位置为右下角，第二个位置为左上角
+如果第一个位置在第二个位置右上方，则第一个位置为右上角，第二个位置为左下角，反之第一个位置为左下角，第二个位置为右上角
+三角形还应该包括变量：self.x1 self.y1 self.x2 self.y2 self.x3 self.y3
+powerhtml1.0版本的输出形式是html/css/javascript代码
+调用时仅支持一种操作：
+鼠标单击三次，分别确定三角形的三个顶点
+
+修改后的html代码类似于：
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>蓝色矩形</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+    <div style="width: 200px; 
+                height: 150px; 
+                background: blue;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);">
+    </div>
+</body>
+</html>
+"""第三个功能：上传图片addimg
+兼容png,jpg格式
+检测到用户在窗口中拖拽或ctrl+v粘贴图片时调用该功能
+由于代码实现难度较高，这里暂不实现"""
+
+暂时不需要后台托管
+
+这个项目能实现吗？在哪些地方有困难？
+你如果觉得这个项目结构可行，帮我完成powerhtml.py；如果不可行，或是需要一些依赖工具，请提出来，我到github上去找相应的工具。
