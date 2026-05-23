@@ -123,6 +123,7 @@
 
 ## 项目结构
 
+```
   POWERHTML/ # 项目根目录
   │
   ├── bin/ # 编译输出目录
@@ -176,6 +177,7 @@
   ├── developerl.txt # 开发日志
   ├── powerhtml_v0.1.2.spec # PyInstaller 配置文件
   └── README.md # 项目说明文档
+```
 
 ### 核心文件说明
 
